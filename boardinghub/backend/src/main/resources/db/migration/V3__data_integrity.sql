@@ -1,0 +1,10 @@
+ALTER TABLE meter_readings ADD CONSTRAINT ck_meter_order CHECK (current_value >= previous_value);
+ALTER TABLE meter_readings ADD CONSTRAINT uq_meter_period UNIQUE (room_id, period, meter_type);
+ALTER TABLE invoices ADD CONSTRAINT uq_invoice_period UNIQUE (contract_id, period);
+ALTER TABLE payments ADD CONSTRAINT ck_payment_amount CHECK (amount > 0);
+ALTER TABLE invoices ADD CONSTRAINT ck_invoice_amount CHECK (total_amount >= 0);
+ALTER TABLE contracts ADD CONSTRAINT ck_contract_amount CHECK (rent_amount >= 0);
+ALTER TABLE contracts ADD CONSTRAINT ck_contract_dates CHECK (end_date IS NULL OR end_date >= start_date);
+ALTER TABLE absences ADD CONSTRAINT ck_absence_dates CHECK (end_date >= start_date);
+ALTER TABLE fund_entries ADD CONSTRAINT ck_fund_amount CHECK (amount <> 0);
+ALTER TABLE operating_expenses ADD CONSTRAINT ck_expense_amount CHECK (amount >= 0);
