@@ -1,0 +1,63 @@
+@startuml
+title BoardingHub — Sơ đồ use case tổng quan
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+skinparam defaultFontName Arial
+skinparam usecase {
+  BackgroundColor #EFF6FF
+  BorderColor #1D4ED8
+}
+
+actor "Nhân viên" as NV
+actor "Chủ trọ" as CT
+actor "Người thuê" as NT
+actor "Người tìm phòng" as TP
+actor "Quản trị nền tảng" as QT
+actor "Người vận hành" as VH
+actor "Bộ hẹn giờ" as TIMER <<system>>
+
+NV <|-- CT
+
+rectangle "BoardingHub" {
+  usecase "Đăng nhập và phân quyền\n(EP01)" as EP01
+  usecase "Quản lý khu trọ, phòng\n(EP02)" as EP02
+  usecase "Người thuê, hợp đồng, cọc\n(EP03, EP04)" as EP03
+  usecase "Tài sản và bàn giao\n(EP05)" as EP05
+  usecase "Điện nước và dịch vụ\n(EP06)" as EP06
+  usecase "Hóa đơn và thu tiền\n(EP07)" as EP07
+  usecase "Trả phòng, quyết toán\n(EP08)" as EP08
+  usecase "Bảo trì và tranh chấp\n(EP09)" as EP09
+  usecase "Ngày Người\n(EP10)" as EP10
+  usecase "Quỹ phòng\n(EP11)" as EP11
+  usecase "Hồ sơ cư trú, PDF\n(EP12)" as EP12
+  usecase "Tìm phòng, lịch xem\n(EP13)" as EP13
+  usecase "Chi phí, báo cáo, nhắc việc\n(EP14)" as EP14
+  usecase "Nhật ký, sao lưu\n(EP15)" as EP15
+}
+
+CT --> EP01
+CT --> EP02
+NV --> EP03
+NV --> EP05
+NV --> EP06
+NV --> EP07
+CT --> EP08
+NV --> EP09
+CT --> EP14
+CT --> EP13
+CT --> EP15
+
+NT --> EP01
+NT --> EP09
+NT --> EP10
+NT --> EP11
+NT --> EP12
+NT --> EP05
+
+TP --> EP13
+QT --> EP13
+QT --> EP01
+VH --> EP15
+TIMER --> EP14
+@enduml

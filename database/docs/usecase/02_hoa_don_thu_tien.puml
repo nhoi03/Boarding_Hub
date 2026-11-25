@@ -1,0 +1,53 @@
+@startuml
+title 2. Điện nước, hóa đơn, thu tiền, trả phòng — EP06, EP07, EP08
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+skinparam defaultFontName Arial
+skinparam usecase {
+  BackgroundColor #EFF6FF
+  BorderColor #1D4ED8
+}
+
+actor "Nhân viên" as NV
+actor "Chủ trọ" as CT
+actor "Người thuê" as NT
+actor "Dịch vụ OCR" as OCR <<system>>
+NV <|-- CT
+
+rectangle "Tính tiền và thu tiền" {
+  usecase "Cấu hình dịch vụ\nvà biểu giá (US-007)" as UC7
+  usecase "Ghi chỉ số điện nước\n(US-008)" as UC8
+  usecase "Ghi thay đồng hồ" as UC8b
+  usecase "Đọc chỉ số bằng OCR\n(US-009)" as UC9
+  usecase "Lập hóa đơn nháp\n(US-010)" as UC10
+  usecase "Phát hành hóa đơn" as UC10b
+  usecase "Lập phiếu điều chỉnh" as UC10c
+  usecase "Ghi thu tiền (US-011)" as UC11
+  usecase "Phân bổ vào hóa đơn" as UC11b
+  usecase "Hoàn tiền dư" as UC11c
+  usecase "Hủy phiếu thu ghi sai" as UC11d
+  usecase "Xem hóa đơn, công nợ\ncủa mình (US-030)" as UC30
+  usecase "Trả phòng và\nquyết toán cọc (US-012)" as UC12
+  usecase "Duyệt khấu trừ hư hỏng" as UC12b
+  usecase "Hoàn cọc" as UC12c
+}
+
+CT --> UC7
+NV --> UC8
+UC8b ..> UC8 : <<extend>>
+UC9 ..> UC8 : <<extend>>
+UC9 --> OCR
+NV --> UC10
+UC10 ..> UC10b : <<include>>
+UC10c ..> UC10b : <<extend>>
+NV --> UC11
+UC11 ..> UC11b : <<include>>
+UC11c ..> UC11 : <<extend>>
+UC11d ..> UC11 : <<extend>>
+NT --> UC30
+CT --> UC12
+UC12 ..> UC12b : <<include>>
+UC12 ..> UC12c : <<include>>
+NT --> UC12
+@enduml

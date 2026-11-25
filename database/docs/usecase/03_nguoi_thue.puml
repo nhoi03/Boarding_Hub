@@ -1,0 +1,54 @@
+@startuml
+title 3. Chức năng của người thuê — Ngày Người, Quỹ phòng, Hồ sơ cư trú (EP10, EP11, EP12)
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+skinparam defaultFontName Arial
+skinparam usecase {
+  BackgroundColor #F0FDF4
+  BorderColor #15803D
+}
+
+actor "Người thuê" as NT
+actor "Người thuê đại diện" as DD
+actor "Thành viên quản lý quỹ" as QQ
+actor "Nhân viên" as NV
+NT <|-- DD
+NT <|-- QQ
+
+rectangle "Ngày Người" {
+  usecase "Gửi lịch vắng (US-015)" as UC15
+  usecase "Duyệt lịch vắng" as UC15b
+  usecase "Chốt phân bổ điện nước\ntheo Ngày Người (US-016)" as UC16
+}
+
+rectangle "Quỹ phòng" {
+  usecase "Ghi đóng quỹ (US-017)" as UC17
+  usecase "Đề nghị mua chung" as UC18a
+  usecase "Xác nhận mua chung\n(cần ≥ 2 người khác) (US-018)" as UC18
+  usecase "Giữ chỗ quỹ" as UC18b
+  usecase "Bù trừ quyền hoàn vào\nkỳ đóng quỹ (US-019)" as UC19
+}
+
+rectangle "Hồ sơ cư trú" {
+  usecase "Khai hồ sơ tạm trú,\ntạm vắng (US-020)" as UC20
+  usecase "Kiểm tra hồ sơ" as UC20b
+  usecase "Xuất và tải PDF (US-021)" as UC21
+}
+
+NT --> UC15
+NV --> UC15b
+DD --> UC16
+UC16 ..> UC15b : <<include>>
+
+QQ --> UC17
+NT --> UC18a
+NT --> UC18
+UC18 ..> UC18b : <<include>>
+QQ --> UC19
+
+NT --> UC20
+NV --> UC20b
+NT --> UC21
+UC20 .> UC15 : <<extend>>\nhồ sơ tạm vắng
+@enduml
