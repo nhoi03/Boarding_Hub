@@ -1,13 +1,28 @@
 server:
   port: 8080
+  servlet:
+    session:
+      timeout: 8h
+      cookie:
+        http-only: true
+        same-site: lax
+        secure: ${SESSION_COOKIE_SECURE:false}
 spring:
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/boardinghub}
+    url: ${DB_URL:jdbc:mysql://127.0.0.1:3307/boardinghub?connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true}
     username: ${DB_USER:boardinghub}
-    password: ${DB_PASSWORD:boardinghub_dev}
+    password: ${DB_PASSWORD:}
   jpa:
     hibernate:
       ddl-auto: validate
     open-in-view: false
   flyway:
     enabled: true
+    locations: classpath:db/mysql
+logging:
+  level:
+    root: INFO
+    org.springframework.jdbc: INFO
+    org.hibernate.SQL: INFO
+    org.springframework.web: INFO
+    org.springframework.security: INFO

@@ -4,3 +4,5 @@ target/
 .env
 .idea/
 *.iml
+.local/
+*.tsbuildinfo
