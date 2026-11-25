@@ -1,0 +1,3 @@
+package vn.boardinghub.modules.property;
+import jakarta.persistence.*;import vn.boardinghub.shared.persistence.BaseEntity;
+@Entity @Table(name="properties") public class Property extends BaseEntity { @Column(nullable=false,length=150)private String name;@Column(nullable=false,length=255)private String address;@Column(length=500)private String description;@Column(nullable=false)private boolean active=true;protected Property(){}public Property(String n,String a,String d){name=n;address=a;description=d;}public String getName(){return name;}public String getAddress(){return address;}public String getDescription(){return description;}public boolean isActive(){return active;}public void update(String n,String a,String d){name=n;address=a;description=d;} }
