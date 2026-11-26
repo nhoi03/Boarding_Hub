@@ -1,0 +1,44 @@
+@startuml
+title 1. Cho thuê phòng — EP02, EP03, EP04, EP05
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+skinparam defaultFontName Arial
+skinparam usecase {
+  BackgroundColor #EFF6FF
+  BorderColor #1D4ED8
+}
+
+actor "Nhân viên" as NV
+actor "Chủ trọ" as CT
+actor "Người thuê" as NT
+NV <|-- CT
+
+rectangle "Cho thuê phòng" {
+  usecase "Quản lý khu trọ và phòng\n(US-002)" as UC2
+  usecase "Quản lý người thuê\nvà ngày ở (US-003)" as UC3
+  usecase "Lập hợp đồng (US-004)" as UC4
+  usecase "Ghi nhận tiền cọc" as UC4b
+  usecase "Kích hoạt hợp đồng" as UC4c
+  usecase "Kiểm tra sức chứa\nvà phòng không bảo trì" as CHK
+  usecase "Gia hạn, đổi giá,\nkết thúc sớm (US-005)" as UC5
+  usecase "Bàn giao nhận / trả phòng\n(US-006)" as UC6
+  usecase "Xác nhận biên bản" as UC6b
+  usecase "Chụp ảnh tình trạng" as PHOTO
+}
+
+CT --> UC2
+NV --> UC3
+CT --> UC4
+NV --> UC4b
+CT --> UC4c
+CT --> UC5
+NV --> UC6
+NT --> UC6b
+
+UC4 ..> UC4b : <<include>>
+UC4c ..> CHK : <<include>>
+UC4c ..> UC3 : <<include>>
+UC6 ..> UC6b : <<include>>
+PHOTO .> UC6 : <<extend>>
+@enduml

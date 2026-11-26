@@ -1,0 +1,33 @@
+@startuml
+title 4. Tìm phòng — EP13
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+skinparam defaultFontName Arial
+skinparam usecase {
+  BackgroundColor #ECFEFF
+  BorderColor #0891B2
+}
+
+actor "Người tìm phòng" as TP
+actor "Chủ trọ" as CT
+actor "Quản trị nền tảng" as QT
+
+rectangle "Tìm phòng" {
+  usecase "Đăng tin phòng (US-022)" as UC22
+  usecase "Kiểm duyệt tin" as UC22b
+  usecase "Tìm phòng (US-023)" as UC23
+  usecase "Gửi yêu cầu thuê" as UC23b
+  usecase "Đề nghị lịch xem (US-024)" as UC24
+  usecase "Xác nhận / đổi / hủy lịch" as UC24b
+}
+
+CT --> UC22
+QT --> UC22b
+UC22 ..> UC22b : <<include>>
+TP --> UC23
+UC23b .> UC23 : <<extend>>
+TP --> UC24
+CT --> UC24b
+UC24 ..> UC24b : <<include>>
+@enduml
