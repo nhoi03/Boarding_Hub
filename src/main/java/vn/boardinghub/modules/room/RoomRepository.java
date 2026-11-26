@@ -1,0 +1,1 @@
+package vn.boardinghub.modules.room;import org.springframework.data.jpa.repository.JpaRepository;import org.springframework.data.domain.*;public interface RoomRepository extends JpaRepository<Room,Long>{Page<Room> findByPropertyId(Long propertyId,Pageable pageable);}

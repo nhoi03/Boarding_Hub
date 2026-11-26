@@ -1,0 +1,1 @@
+package vn.boardinghub;import org.junit.jupiter.api.Test;import static org.junit.jupiter.api.Assertions.*;class BoardingHubApplicationTest{@Test void applicationClassExists(){assertNotNull(BoardingHubApplication.class);}}

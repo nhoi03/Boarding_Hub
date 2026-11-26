@@ -1,0 +1,7 @@
+package vn.boardinghub.modules.auth;
+import vn.boardinghub.modules.user.*;import vn.boardinghub.security.jwt.JwtService;import vn.boardinghub.shared.exception.BusinessException;import org.springframework.http.HttpStatus;import org.springframework.security.crypto.password.PasswordEncoder;import org.springframework.stereotype.Service;import org.springframework.transaction.annotation.Transactional;
+@Service public class AuthService {private final UserRepository users;private final PasswordEncoder encoder;private final JwtService jwt; public AuthService(UserRepository u,PasswordEncoder e,JwtService j){users=u;encoder=e;jwt=j;}
+ @Transactional public AuthDtos.AuthResponse register(AuthDtos.RegisterRequest r){if(users.existsByEmailIgnoreCase(r.email()))throw BusinessException.conflict("Email is already registered");User u=users.save(new User(r.email(),encoder.encode(r.password()),r.fullName()));return response(u);}
+ public AuthDtos.AuthResponse login(AuthDtos.LoginRequest r){User u=users.findByEmailIgnoreCase(r.email()).orElseThrow(()->new BusinessException("INVALID_CREDENTIALS","Email or password is incorrect",HttpStatus.UNAUTHORIZED));if(!u.isActive()||!encoder.matches(r.password(),u.getPasswordHash()))throw new BusinessException("INVALID_CREDENTIALS","Email or password is incorrect",HttpStatus.UNAUTHORIZED);return response(u);}
+ private AuthDtos.AuthResponse response(User u){return new AuthDtos.AuthResponse(jwt.generate(u.getEmail()),"Bearer",900,u.getEmail(),u.getFullName());}
+}

@@ -1,0 +1,3 @@
+package vn.boardinghub.modules.auth;
+import vn.boardinghub.shared.api.ApiResponse;import jakarta.validation.Valid;import org.springframework.web.bind.annotation.*;
+@RestController @RequestMapping("/api/v1/auth") public class AuthController {private final AuthService service;public AuthController(AuthService s){service=s;}@PostMapping("/register") public ApiResponse<AuthDtos.AuthResponse> register(@Valid @RequestBody AuthDtos.RegisterRequest r){return ApiResponse.ok("Account registered",service.register(r));}@PostMapping("/login") public ApiResponse<AuthDtos.AuthResponse> login(@Valid @RequestBody AuthDtos.LoginRequest r){return ApiResponse.ok("Login successful",service.login(r));}}
